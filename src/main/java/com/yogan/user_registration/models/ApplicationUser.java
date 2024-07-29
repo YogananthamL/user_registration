@@ -8,7 +8,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @Entity
 @Table(name="user")
@@ -24,11 +23,12 @@ public class ApplicationUser implements UserDetails {
     private String firstName;
     @Column(name="last_name")
     private String lastName;
-    @Column(name="email")
+    @Column(name="email", unique = true)
     private String email;
     @Column(name="password")
     private String password;
     @Column(name="role")
+    @Enumerated(EnumType.STRING)
     private UserRole role;
     @Column(name="is_locked")
     private boolean isLocked;
@@ -46,15 +46,7 @@ public class ApplicationUser implements UserDetails {
         this.isEnabled = isEnabled;
     }
 
-    public ApplicationUser(String firstName, String lastName, String email, String password, UserRole role, boolean isLocked, boolean isEnabled) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-        this.role = role;
-        this.isLocked = isLocked;
-        this.isEnabled = isEnabled;
-    }
+
     public ApplicationUser(){
 
     }

@@ -26,7 +26,15 @@ public class UserConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(request ->
                         request.requestMatchers(HttpMethod.POST,"/api/v1/authentication/register").permitAll()
-                                .anyRequest().authenticated()).authenticationProvider(authenticationProvider());
+                                .requestMatchers(HttpMethod.GET,"/api/v1/authentication/confirm").permitAll()
+                                .anyRequest().authenticated()).authenticationProvider(authenticationProvider())
+                .formLogin(form -> form.permitAll()) // Use the default login page
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/login?logout")
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
+                        .permitAll());
 
 
         http.csrf(csrf -> csrf.disable());

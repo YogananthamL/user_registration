@@ -2,11 +2,7 @@ package com.yogan.user_registration.controllers;
 
 import com.yogan.user_registration.dto.UserDTO;
 import com.yogan.user_registration.services.RegistrationService;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/authentication")
@@ -23,6 +19,9 @@ public class AuthenticateController {
         return service.register(userDTO);
 
     }
-
+    @GetMapping("/confirm")
+    public String confirm(@RequestParam String token){
+        return service.confirm(token);
+    }
 
 }
